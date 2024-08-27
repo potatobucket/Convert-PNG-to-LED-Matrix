@@ -8,14 +8,12 @@ def format_for_matrix(first: str, second: str, third: str):
     """
 Formats the three hexidecimal numbers (first, second, third) into a variable declaration for C++.
     """
-    curlyOpen = "{"   # -- a hacky way to get the f-string to work
-    curlyClosed = "}" # -- nothing else I tried worked. I'm sorry
     return f"""
-const uint32_t frame[] = {curlyOpen}
+const uint32_t frame[] = {{
     {first},
     {second},
     {third}
-{curlyClosed};
+}};
                 """
 
 class Picture:
