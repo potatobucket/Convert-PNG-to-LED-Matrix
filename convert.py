@@ -4,12 +4,12 @@ from PIL import Image
 manditoryWidth = 12
 manditoryHeight = 8
 
-def format_for_matrix(first: str, second: str, third: str):
+def format_for_matrix(first: str, second: str, third: str, name: str):
     """
 Formats the three hexidecimal numbers (first, second, third) into a variable declaration for C++.
     """
     return f"""
-const uint32_t frame[] = {{
+const uint32_t {name}[] = {{
     {first},
     {second},
     {third}
@@ -20,8 +20,9 @@ class Picture:
     """
 Used to convert a picture to a format for an LED matrix on an Arduino Uno R4 Wifi board.
     """
-    def __init__(self, imagePath: str):
+    def __init__(self, imagePath: str, nameOfFrame: str):
         self.imagePath = imagePath
+        self.nameOfFrame = nameOfFrame
     
     def convert_to_matrix(self):
         """
@@ -41,8 +42,8 @@ Used to convert a picture to a format for an LED matrix on an Arduino Uno R4 Wif
             hexOne = hex(int("".join(firstSet), 2))
             hexTwo = hex(int("".join(secondSet), 2))
             hexThree = hex(int("".join(thirdSet), 2))
-            return format_for_matrix(hexOne, hexTwo, hexThree)
+            return format_for_matrix(hexOne, hexTwo, hexThree, self.nameOfFrame)
 
 if __name__ == "__main__":
-    picture = Picture("example.png")
+    picture = Picture("example.png", "heart")
     print(picture.convert_to_matrix())
