@@ -175,7 +175,6 @@ pyrightconfig.json
 
 test.py
 *.jpg
-*.png
 *.mp4
 
 # End of https://www.toptal.com/developers/gitignore/api/python
