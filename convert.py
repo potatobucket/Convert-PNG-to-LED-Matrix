@@ -13,7 +13,7 @@ const uint32_t {name}[] = {{
     {first},
     {second},
     {third}
-}};
+}}
                 """
 
 class Picture:
