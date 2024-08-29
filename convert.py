@@ -1,3 +1,7 @@
+"""
+Handles logic for converting individual images to frames for the Arduino Uno R4 Wifi LED matrix.
+"""
+
 import exceptions
 import gif_conversion
 from PIL import Image
@@ -14,8 +18,7 @@ const uint32_t {name}[] = {{
     {first},
     {second},
     {third}
-}};
-                """
+}};"""
 
 class Picture:
     """
@@ -46,13 +49,20 @@ Used to convert a picture to a format for an LED matrix on an Arduino Uno R4 Wif
             return format_for_matrix(hexOne, hexTwo, hexThree, self.nameOfFrame)
 
 def convert_gif(gifPath: str):
+    """
+Converts a given GIF to a series of frames for the Arduino Uno R4 Wifi LED matrix and appends a C++ array of the frames at the end.
+    """
+    frameList = []
     if gifPath.split(".")[-1] != "gif":
         raise exceptions.NotAGif("File is not a gif")
     else:
         gif_conversion.extract_frames(gifPath, "Temporary")
     for index, frame in enumerate(gif_conversion.get_files("Temporary")):
-        frame = Picture(f"Temporary/{frame}", f"Frame{index}".zfill(3))
+        index = str(index).zfill(2)
+        frame = Picture(f"Temporary/{frame}", f"frame{index}")
+        frameList.append(f"frame{index}")
         print(frame.convert_to_matrix())
+    print(gif_conversion.create_frame_array(frameList))
     gif_conversion.delete_folder("Temporary")
 
 if __name__ == "__main__":
