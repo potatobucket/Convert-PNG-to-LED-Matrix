@@ -5,3 +5,6 @@ class TooBig(Exception):
 
 class TooSmall(Exception):
     """Raise if image size too small (Must be 12x8)"""
+
+class NotAGif(Exception):
+    """Raise if file is not a gif"""

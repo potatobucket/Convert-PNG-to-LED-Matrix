@@ -1,4 +1,5 @@
 import exceptions
+import gif_conversion
 from PIL import Image
 
 manditoryWidth = 12
@@ -13,7 +14,7 @@ const uint32_t {name}[] = {{
     {first},
     {second},
     {third}
-}}
+}};
                 """
 
 class Picture:
@@ -44,6 +45,20 @@ Used to convert a picture to a format for an LED matrix on an Arduino Uno R4 Wif
             hexThree = hex(int("".join(thirdSet), 2))
             return format_for_matrix(hexOne, hexTwo, hexThree, self.nameOfFrame)
 
+def convert_gif(gifPath: str):
+    if gifPath.split(".")[-1] != "gif":
+        raise exceptions.NotAGif("File is not a gif")
+    else:
+        gif_conversion.extract_frames(gifPath, "Temporary")
+    for index, frame in enumerate(gif_conversion.get_files("Temporary")):
+        frame = Picture(f"Temporary/{frame}", f"Frame{index}".zfill(3))
+        print(frame.convert_to_matrix())
+    gif_conversion.delete_folder("Temporary")
+
 if __name__ == "__main__":
+    #-- Example code to convert single image
     picture = Picture("example.png", "heart")
     print(picture.convert_to_matrix())
+
+    #-- Example code to convert gif to series of single images
+    convert_gif("example_gif.gif")
