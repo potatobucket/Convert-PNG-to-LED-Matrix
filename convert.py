@@ -48,6 +48,10 @@ Used to convert a picture to a format for an LED matrix on an Arduino Uno R4 Wif
             hexThree = hex(int("".join(thirdSet), 2))
             return format_for_matrix(hexOne, hexTwo, hexThree, self.nameOfFrame)
 
+def convert_picture(picturePath: str, frameName: str):
+    picture = Picture(picturePath, frameName)
+    return picture.convert_to_matrix()
+
 def convert_gif(gifPath: str):
     """
 Converts a given GIF to a series of frames for the Arduino Uno R4 Wifi LED matrix and appends a C++ array of the frames at the end.
@@ -67,8 +71,7 @@ Converts a given GIF to a series of frames for the Arduino Uno R4 Wifi LED matri
 
 if __name__ == "__main__":
     #-- Example code to convert single image
-    picture = Picture("example.png", "heart")
-    print(picture.convert_to_matrix())
+    print(convert_picture("example.png", "heart"))
 
     #-- Example code to convert gif to series of single images
     convert_gif("example_gif.gif")
