@@ -6,5 +6,8 @@
  GIFs are automatically generated into individual frames and an array of all the frames is generated at the end of the list
  for convenience.
 
-## Example (blown up for visibility):
+## Example PNG (blown up for visibility):
  ![a white heart on a black background](/Example/heart-example.PNG)
+
+## Example GIF (blown up for visibility):
+![a small gif showing a bouncing ball](/Example/ball_bounce.gif)
